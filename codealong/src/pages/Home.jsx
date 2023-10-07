@@ -37,19 +37,20 @@ const Home = () => {
   }
 
   return (
-    <div className="homePageWrapper">
-      <div className="formWrapper">
+    <div className="card h-screen flex items-center justify-center text-white">
+      <div className="bg-zinc-900 rounded-lg p-5 w-100 max-w-80">
         <Logo/>
-        <h4 className="mainLabel">Paste Invitation RoomID</h4>
+        <h4 className="mb-3 mt-0 font-semibold">Paste Invitation RoomID</h4>
 
-        <div className="inputGroup">
-          <input type="text" className="inputBox" placeholder="ROOM ID" value={roomid} onChange={(e) => {setRoomId(e.target.value)}} onKeyUp={handleInputEnter} />
-          <input type="text" className="inputBox" placeholder="USERNAME" onChange={(e) => {setUsername(e.target.value)}} value={username} onKeyUp={handleInputEnter} />
-          <button onClick={joinRoom} className="btn joinBtn">JOIN</button>
-          <span className="createInfo">
-            If you dont have an invite code then create &nbsp;
-            <a onClick={createNewRoom} href="" className="createNewBtn">
-              New Room
+        <div className="flex flex-col outline-none mb-3.5 bg-white-400 font-semibold text-xl">
+
+          <input type="text" className="input input-bordered input-primary w-full  mb-2" placeholder="ROOM ID" value={roomid} onChange={(e) => {setRoomId(e.target.value)}} onKeyUp={handleInputEnter} />
+          <input type="text" className="input input-bordered input-primary w-full  mb-2" placeholder="USERNAME" onChange={(e) => {setUsername(e.target.value)}} value={username} onKeyUp={handleInputEnter} />
+          <button onClick={joinRoom} className="btn w-full btn-accent text-xl">JOIN</button>
+          <span className="mt-2 mb-2">
+            Don't have an invite code,
+            <a onClick={createNewRoom} href="" className="btn btn-accent btn-block text-xl">
+              Create New Room
             </a>
           </span>
         </div>
@@ -57,7 +58,7 @@ const Home = () => {
 
       {/* Footer */}
       <footer>
-        <h4>Building with 💗</h4>
+        <h4 className="m-5">Building with 💗</h4>
       </footer>
     </div>
   );
