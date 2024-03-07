@@ -1,15 +1,16 @@
 import React from "react";
 import Logo from "./Logo";
 import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
 
 const Navbar = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <>
-      <div className="navbar bg-base-100">
-        <div className="navbar-start">
-          <div className="dropdown">
+      <nav className="flex justify-between py-4 px-6 bg-gray-100">
+        <div className="flex items-center">
+          <div className="dropdown relative">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -27,15 +28,20 @@ const Navbar = () => {
               </svg>
             </label>
           </div>
-          <a className="btn btn-ghost normal-case text-xl">CodeAlong</a>
+          <a className="ml-4 text-xl font-semibold">CodeAlong</a>
         </div>
-        <div className="navbar-center hidden lg:flex">
-         
+        <div className="hidden lg:flex"></div>
+        <div className="flex items-center">
+          <Button
+            className="btn btn-accent"
+            onClick={() => {
+              navigate("/join-room");
+            }}
+          >
+            Create/Join Room
+          </Button>
         </div>
-        <div className="navbar-end">
-          <a className="btn btn-accent" onClick={()=>{navigate('/join-room')}}>Create/Join Room</a>
-        </div>
-      </div>
+      </nav>
     </>
   );
 };

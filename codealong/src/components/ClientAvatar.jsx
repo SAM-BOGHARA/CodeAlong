@@ -3,13 +3,13 @@ import Avatar from 'react-avatar'
 const ClientAvatar = ({username}) => {
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div className="flex -ml-3">
         <Avatar
           name={username}
-          size={50}
-          round="14px"
+          size={45}
+          round="50px"
         />
-        <span className="text-center">{username?.slice(0,3)}</span>
+        {/* <span className="text-center">{username?.slice(0,3)}</span> */}
       </div>
     </>
   );

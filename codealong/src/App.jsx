@@ -4,6 +4,7 @@ import EditorPage from "./pages/EditorPage.jsx";
 import toast, { Toaster } from "react-hot-toast";
 import "./App.css";
 import Landing from "./pages/Landing.jsx";
+import { RecoilRoot } from "recoil";
 function App() {
   return (
     <>
@@ -20,14 +21,20 @@ function App() {
         ></Toaster>
       </div>
       <BrowserRouter>
-        <Routes>
-          <Route exact path="/" element={<Landing />}></Route>
-          {/* Home Page */}
-          <Route exact path="/join-room" element={<Home />}></Route>
+        <RecoilRoot>
+          <Routes>
+            <Route exact path="/" element={<Landing />}></Route>
+            {/* Home Page */}
+            <Route exact path="/join-room" element={<Home />}></Route>
 
-          {/* Editor Page */}
-          <Route exact path="/editor/:roomID" element={<EditorPage />}></Route>
-        </Routes>
+            {/* Editor Page */}
+            <Route
+              exact
+              path="/editor/:roomID"
+              element={<EditorPage />}
+            ></Route>
+          </Routes>
+        </RecoilRoot>
       </BrowserRouter>
     </>
   );

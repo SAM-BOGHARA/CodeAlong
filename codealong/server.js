@@ -1,20 +1,29 @@
-import express from 'express';
-import { Server } from 'socket.io';
-import http from 'http';
-import dotenv from 'dotenv';
-import { REACT_APP_BACKEND_URL } from './config.js';
 import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
+import http from 'http';
+import { Server } from 'socket.io';
+import { REACT_APP_BACKEND_URL } from './config.js';
 import ACTIONS from './src/Actions.js';
 dotenv.config();
 
-
 const app = express();
-app.use(cors());
+
 
 const server = http.createServer(app);
 const io = new Server(server);
 
 const PORT = process.env.PORT || 3000;
+
+const userSocketMap = {}
+function getAllConnectedClients(roomID) {
+    return Array.from(io.sockets.adapter.rooms.get(roomID) || []).map((socketId) => {
+        return {
+            socketId,
+            username: userSocketMap[socketId]
+        }
+    })
+}
 
 io.on('connection', (socket) => {
     // console.log("Socket connected : " + socket.id)
@@ -25,15 +34,7 @@ io.on('connection', (socket) => {
         console.log("Socket disconnected: " + socket.id);
     });
 
-    const userSocketMap = {}
-    function getAllConnectedClients(roomID) {
-        return Array.from(io.sockets.adapter.rooms.get(roomID) || []).map((socketId) => {
-            return {
-                socketId,
-                username: userSocketMap[socketId]
-            }
-        })
-    }
+    
     // ACTIONS -- JOIN
     socket.on(ACTIONS.JOIN, ({ roomID, username }) => {
         userSocketMap[socket.id] = username;
@@ -70,8 +71,6 @@ io.on('connection', (socket) => {
         delete userSocketMap[socket.id];
         socket.leave();
     })
-
-
 
 })
 
