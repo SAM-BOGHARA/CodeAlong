@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
-import { REACT_APP_BACKEND_URL } from './config.js';
-import ACTIONS from './src/Actions.js';
+import { REACT_APP_BACKEND_URL } from '../config.js';
+import ACTIONS from '../src/Actions.js';
 dotenv.config();
 
 const app = express();
