@@ -40,11 +40,14 @@ const Home = () => {
 
   return (
     <>
-      <div className="w-full h-screen flex items-center justify-center text-white">
-        <div className="bg-zinc-900 rounded-lg p-5 w-full max-w-2xl">
+      <div className="bg-zinc-300 w-full h-screen flex items-center justify-center text-white">
+        <div className="bg-zinc-900 rounded-lg p-5 w-full max-w-xl">
           {" "}
           {/* Adjust width here */}
           <Logo />
+          <Label className="text-xl flex items-center justify-center">
+            Join the Room
+          </Label>
           <h4 className="mb-3 mt-0 font-semibold">Paste Invitation RoomID</h4>
           <div className="flex flex-col mb-3.5 font-semibold text-xl">
             <Input
@@ -66,17 +69,14 @@ const Home = () => {
               onKeyUp={handleInputEnter}
               className="mb-2 text-black" // Remove width here to allow input to stretch
             />
-            <div className="flex justify-center mb-2">
-              {" "}
-              {/* Center the "Create New Room" button */}
+            <div className="flex justify-between">
               <Button onClick={joinRoom} variant="secondary">
                 JOIN
               </Button>
-            </div>
-            <div className="flex justify-center mb-2">
-              {" "}
-              {/* Center the "Create New Room" button */}
-              <Button onClick={createNewRoom} variant="secondary">
+              <Button
+                onClick={createNewRoom}
+                className="bg-green-700 hover:bg-green-800 ml-10"
+              >
                 Create New Room
               </Button>
             </div>

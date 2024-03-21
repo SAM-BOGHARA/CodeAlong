@@ -7,8 +7,8 @@ const ZegoCloud = () => {
   const username = location.state?.username;
   const { roomID } = useParams();
   let myMeeting = async (element) => {
-    const appID = 1875800080;
-    const serverSecret = "f671601dcc8fd8bf5e10591c9c111499";
+    const appID = 1114127358;
+    const serverSecret = "e9758aed57773c645f9e3fd9890a80ea";
 
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       appID,

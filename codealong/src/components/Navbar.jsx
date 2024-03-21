@@ -33,7 +33,7 @@ const Navbar = () => {
         <div className="hidden lg:flex"></div>
         <div className="flex items-center">
           <Button
-            className="btn btn-accent"
+            className="btn btn-accent bg-green-700 hover:bg-green-800"
             onClick={() => {
               navigate("/join-room");
             }}
