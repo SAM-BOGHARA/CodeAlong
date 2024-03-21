@@ -9,8 +9,7 @@
     "server:dev": "nodemon server.js",
     "server:prod": "node server.js",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "build:serverless": "vercel-bundle api/server.js"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.1",
