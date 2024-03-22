@@ -74,13 +74,13 @@ export function LandingPage() {
                 </div>
               </div>
             </div>
-            <img
+            {/* <img
               alt="Hero"
               className="mx-auto overflow-hidden rounded-xl object-cover"
               height="600"
               src="/assets/user1.PNG"
               width="1200"
-            />
+            /> */}
           </div>
         </section>
         <section className="w-full py-12 md:py-24 lg:py-32" id="features">
