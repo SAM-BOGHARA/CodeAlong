@@ -78,7 +78,7 @@ export function LandingPage() {
               alt="Hero"
               className="mx-auto overflow-hidden rounded-xl object-cover"
               height="600"
-              src="src\assets\user1.PNG"
+              src="assets\user1.PNG"
               width="1200"
             />
           </div>
