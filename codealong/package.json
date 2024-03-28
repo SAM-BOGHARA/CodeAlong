@@ -19,6 +19,7 @@
     "@uiw/codemirror-themes-all": "^4.21.19",
     "@uiw/react-codemirror": "^4.21.19",
     "@zegocloud/zego-uikit-prebuilt": "^1.10.2",
+    "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "codemirror": "^5.65.11",

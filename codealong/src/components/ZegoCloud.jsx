@@ -31,7 +31,7 @@ const ZegoCloud = () => {
       showScreenSharingButton: true, // Show screen sharing button
       showPinButton: false, // Show pin button
       showRoomDetailsButton: false, // Show room details button
-      maxUsers: 10,
+      maxUsers: 25,
       preJoinViewConfig: {
         title: "Join as : " + username, // The title of the prejoin view. Uses "enter Room" by default.
       },

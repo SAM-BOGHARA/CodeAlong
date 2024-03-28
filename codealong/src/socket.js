@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
-import { REACT_APP_BACKEND_URL } from '../config.js';
+// import { REACT_APP_BACKEND_URL } from '../config.js';
 
 export const initSocket = async () => {
     const options = {
@@ -9,6 +9,6 @@ export const initSocket = async () => {
         transports: ['websocket'],
     };
     console.log("Init Socket Started")
-    console.log(REACT_APP_BACKEND_URL)
-    return io(REACT_APP_BACKEND_URL, options)
+    console.log(import.meta.env.VITE_REACT_APP_BACKEND_URL)
+    return io(import.meta.env.VITE_REACT_APP_BACKEND_URL, options)
 }

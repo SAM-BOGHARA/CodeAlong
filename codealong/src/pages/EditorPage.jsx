@@ -31,11 +31,13 @@ const EditorPage = () => {
   const reactNavigator = useNavigate();
   const { roomID } = useParams();
   const [clients, setClients] = useState([]);
-  const limit = 2
+  const limit = 10
 
-  // const [lang, setLang] = useRecoilState(language);
-  // const [them, setThem] = useRecoilState(cmtheme);
-
+  const [customInput, setCustomInput] = useState("");
+  const [outputValue, setOutputValue] = useState("");
+  const handleOutputValueUpdate = (newOutputValue) => {
+    setOutputValue(newOutputValue);
+  };
   useEffect(() => {
     const init = async () => {
       socketRef.current = await initSocket();
@@ -166,6 +168,10 @@ const EditorPage = () => {
                   onCodeChange={(code) => {
                     codeRef.current = code;
                   }}
+                  customInput={customInput}
+                  setCustomInput={setCustomInput}
+                  outputValue={outputValue}
+                  setOutputValue={handleOutputValueUpdate}
                 />
               </Card>
             </div>
@@ -177,12 +183,22 @@ const EditorPage = () => {
                 <ResizablePanelGroup direction="horizontal">
                   <ResizablePanel defaultSize={50}>
                     <div className="flex h-700">
-                      <Textarea placeholder="Input goes here" rows="13" />
+                      <Textarea
+                        value={customInput}
+                        onChange={(e) => setCustomInput(e.target.value)}
+                        placeholder="Input goes here"
+                        rows="13"
+                      />
                     </div>
                   </ResizablePanel>
                   <ResizablePanel defaultSize={50}>
                     <div className="flex h-700">
-                      <Textarea placeholder="Output goes here" rows="13" />
+                      <Textarea
+                        value={outputValue}
+                        readOnly
+                        placeholder="Output goes here"
+                        rows="13"
+                      />
                     </div>
                   </ResizablePanel>
                 </ResizablePanelGroup>

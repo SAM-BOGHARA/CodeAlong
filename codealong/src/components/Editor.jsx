@@ -148,8 +148,17 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { language, cmtheme } from "../../src/atoms";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
+import axios from "axios";
 
-const Editor = ({ socketRef, roomID, onCodeChange }) => {
+const Editor = ({
+  socketRef,
+  roomID,
+  onCodeChange,
+  customInput,
+  setCustomInput,
+  outputValue,
+  setOutputValue,
+}) => {
   const editorRef = useRef(null);
   const [lang, setLang] = useRecoilState(language);
   const [them, setThem] = useRecoilState(cmtheme);
@@ -179,6 +188,75 @@ const Editor = ({ socketRef, roomID, onCodeChange }) => {
     { id: 20, name: "XML", value: "xml" },
     { id: 21, name: "YAML", value: "yaml" },
   ];
+  const themeOptions = [
+    { id: 1, name: "default", value: "default" },
+    { id: 2, name: "3024-day", value: "3024-day" },
+    { id: 3, name: "3024-night", value: "3024-night" },
+    { id: 4, name: "abbott", value: "abbott" },
+    { id: 5, name: "abcdef", value: "abcdef" },
+    { id: 6, name: "ambiance", value: "ambiance" },
+    { id: 7, name: "ayu-dark", value: "ayu-dark" },
+    { id: 8, name: "ayu-mirage", value: "ayu-mirage" },
+    { id: 9, name: "base16-dark", value: "base16-dark" },
+    { id: 10, name: "base16-light", value: "base16-light" },
+    { id: 11, name: "bespin", value: "bespin" },
+    { id: 12, name: "blackboard", value: "blackboard" },
+    { id: 13, name: "cobalt", value: "cobalt" },
+    { id: 14, name: "colorforth", value: "colorforth" },
+    { id: 15, name: "darcula", value: "darcula" },
+    { id: 16, name: "duotone-dark", value: "duotone-dark" },
+    { id: 17, name: "duotone-light", value: "duotone-light" },
+    { id: 18, name: "eclipse", value: "eclipse" },
+    { id: 19, name: "elegant", value: "elegant" },
+    { id: 20, name: "erlang-dark", value: "erlang-dark" },
+    { id: 21, name: "gruvbox-dark", value: "gruvbox-dark" },
+    { id: 22, name: "hopscotch", value: "hopscotch" },
+    { id: 23, name: "icecoder", value: "icecoder" },
+    { id: 24, name: "idea", value: "idea" },
+    { id: 25, name: "isotope", value: "isotope" },
+    { id: 26, name: "juejin", value: "juejin" },
+    { id: 27, name: "lesser-dark", value: "lesser-dark" },
+    { id: 28, name: "liquibyte", value: "liquibyte" },
+    { id: 29, name: "lucario", value: "lucario" },
+    { id: 30, name: "material", value: "material" },
+    { id: 31, name: "material-darker", value: "material-darker" },
+    { id: 32, name: "material-palenight", value: "material-palenight" },
+    { id: 33, name: "material-ocean", value: "material-ocean" },
+    { id: 34, name: "mbo", value: "mbo" },
+    { id: 35, name: "mdn-like", value: "mdn-like" },
+    { id: 36, name: "midnight", value: "midnight" },
+    { id: 37, name: "monokai", value: "monokai" },
+    { id: 38, name: "moxer", value: "moxer" },
+    { id: 39, name: "neat", value: "neat" },
+    { id: 40, name: "neo", value: "neo" },
+    { id: 41, name: "night", value: "night" },
+    { id: 42, name: "nord", value: "nord" },
+    { id: 43, name: "oceanic-next", value: "oceanic-next" },
+    { id: 44, name: "panda-syntax", value: "panda-syntax" },
+    { id: 45, name: "paraiso-dark", value: "paraiso-dark" },
+    { id: 46, name: "paraiso-light", value: "paraiso-light" },
+    { id: 47, name: "pastel-on-dark", value: "pastel-on-dark" },
+    { id: 48, name: "railscasts", value: "railscasts" },
+    { id: 49, name: "rubyblue", value: "rubyblue" },
+    { id: 50, name: "seti", value: "seti" },
+    { id: 51, name: "shadowfox", value: "shadowfox" },
+    { id: 52, name: "solarized", value: "solarized" },
+    { id: 53, name: "the-matrix", value: "the-matrix" },
+    { id: 54, name: "tomorrow-night-bright", value: "tomorrow-night-bright" },
+    {
+      id: 55,
+      name: "tomorrow-night-eighties",
+      value: "tomorrow-night-eighties",
+    },
+    { id: 56, name: "ttcn", value: "ttcn" },
+    { id: 57, name: "twilight", value: "twilight" },
+    { id: 58, name: "vibrant-ink", value: "vibrant-ink" },
+    { id: 59, name: "xq-dark", value: "xq-dark" },
+    { id: 60, name: "xq-light", value: "xq-light" },
+    { id: 61, name: "yeti", value: "yeti" },
+    { id: 62, name: "yonce", value: "yonce" },
+    { id: 63, name: "zenburn", value: "zenburn" },
+  ];
   const [selectedLanguage, setSelectedLanguage] = useState({
     id: null,
     value: "",
@@ -192,10 +270,73 @@ const Editor = ({ socketRef, roomID, onCodeChange }) => {
       id: selectedOption.id,
       value: selectedOption.value,
     });
-    setLang(selectedOption.value)
-    console.log(selectedOption.id,selectedOption.value)
+    setLang(selectedOption.value);
+    console.log(selectedOption.id, selectedOption.value);
   };
-  
+
+    const handleCodeExecution = async () => {
+      setOutputValue(""); 
+      console.log(import.meta.env.VITE_JUDGE0_API_URL);
+      // Prepare the request payload
+      const formData = {
+        language_id: selectedLanguage.id,
+        source_code: btoa(code),
+        stdin: btoa(customInput),
+      };
+
+      // Make the API request using axios
+      try {
+        const response = await axios.request({
+          method: "POST",
+          url: import.meta.env.VITE_JUDGE0_API_URL,
+          params: { base64_encoded: "true", fields: "*" },
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: formData,
+        });
+
+        const token = response.data.token;
+        console.log("token",token)
+        const output = await checkStatus(token);
+        // console.log("execution reached here")
+        // setOutputValue(output);
+        
+      } catch (error) {
+        console.error("Error executing code:", error);
+        setOutputValue("Error executing code. Please try again.");
+      }
+    };
+
+  const checkStatus = async (token) => {
+    const options = {
+      method: "GET",
+      url: import.meta.env.VITE_JUDGE0_API_URL + "/" + token,
+      params: { base64_encoded: "false", fields: "*" },
+    };
+
+    try {
+      let response = await axios.request(options);
+      let statusId = response.data.status?.id;
+      console.log(response)
+      // If the code is still processing
+      if (statusId === 1 || statusId === 2) {
+        // Poll again after 2 seconds
+        setTimeout(() => {
+          checkStatus(token);
+        }, 2000);
+        return;
+      } else {
+        // Code has finished executing
+        const output = response.data.stdout
+        console.log("output",output)
+        setOutputValue(output);
+      }
+    } catch (err) {
+      console.error("Error checking status:", err);
+      return "Error executing code. Please try again.";
+    }
+  };
   useEffect(() => {
     if (!editorRef.current) {
       // Initialize editor only once
@@ -215,7 +356,7 @@ const Editor = ({ socketRef, roomID, onCodeChange }) => {
           showCursorWhenSelecting: true,
           scrollbarStyle: "overlay",
           cursorScrollMargin: 2,
-          lintOnChange : true
+          lintOnChange: true,
         }
       );
 
@@ -258,10 +399,15 @@ const Editor = ({ socketRef, roomID, onCodeChange }) => {
         <select
           value={selectedLanguage.value}
           onChange={handleLanguageChange}
-          className="seLang p-2"
+          className="seLang p-2 appearance-none bg-white border border-gray-400 hover:border-gray-500 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
         >
           {languageOptions.map((option) => (
-            <option key={option.id} value={option.value}>
+            <option
+              key={option.id}
+              value={option.value}
+              className="bg-white hover:bg-gray-200"
+              style={{ backgroundColor: "#F3F4F6" }}
+            >
               {option.name}
             </option>
           ))}
@@ -275,76 +421,23 @@ const Editor = ({ socketRef, roomID, onCodeChange }) => {
           onChange={(e) => {
             setThem(e.target.value);
           }}
-          className="seLang"
+          className="seLang p-2 appearance-none bg-white border border-gray-400 hover:border-gray-500 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
         >
-          <option value="default">default</option>
-          <option value="3024-day">3024-day</option>
-          <option value="3024-night">3024-night</option>
-          <option value="abbott">abbott</option>
-          <option value="abcdef">abcdef</option>
-          <option value="ambiance">ambiance</option>
-          <option value="ayu-dark">ayu-dark</option>
-          <option value="ayu-mirage">ayu-mirage</option>
-          <option value="base16-dark">base16-dark</option>
-          <option value="base16-light">base16-light</option>
-          <option value="bespin">bespin</option>
-          <option value="blackboard">blackboard</option>
-          <option value="cobalt">cobalt</option>
-          <option value="colorforth">colorforth</option>
-          <option value="darcula">darcula</option>
-          <option value="duotone-dark">duotone-dark</option>
-          <option value="duotone-light">duotone-light</option>
-          <option value="eclipse">eclipse</option>
-          <option value="elegant">elegant</option>
-          <option value="erlang-dark">erlang-dark</option>
-          <option value="gruvbox-dark">gruvbox-dark</option>
-          <option value="hopscotch">hopscotch</option>
-          <option value="icecoder">icecoder</option>
-          <option value="idea">idea</option>
-          <option value="isotope">isotope</option>
-          <option value="juejin">juejin</option>
-          <option value="lesser-dark">lesser-dark</option>
-          <option value="liquibyte">liquibyte</option>
-          <option value="lucario">lucario</option>
-          <option value="material">material</option>
-          <option value="material-darker">material-darker</option>
-          <option value="material-palenight">material-palenight</option>
-          <option value="material-ocean">material-ocean</option>
-          <option value="mbo">mbo</option>
-          <option value="mdn-like">mdn-like</option>
-          <option value="midnight">midnight</option>
-          <option value="monokai">monokai</option>
-          <option value="moxer">moxer</option>
-          <option value="neat">neat</option>
-          <option value="neo">neo</option>
-          <option value="night">night</option>
-          <option value="nord">nord</option>
-          <option value="oceanic-next">oceanic-next</option>
-          <option value="panda-syntax">panda-syntax</option>
-          <option value="paraiso-dark">paraiso-dark</option>
-          <option value="paraiso-light">paraiso-light</option>
-          <option value="pastel-on-dark">pastel-on-dark</option>
-          <option value="railscasts">railscasts</option>
-          <option value="rubyblue">rubyblue</option>
-          <option value="seti">seti</option>
-          <option value="shadowfox">shadowfox</option>
-          <option value="solarized">solarized</option>
-          <option value="the-matrix">the-matrix</option>
-          <option value="tomorrow-night-bright">tom-n-bright</option>
-          <option value="tomorrow-night-eighties">tom-n-eighties</option>
-          <option value="ttcn">ttcn</option>
-          <option value="twilight">twilight</option>
-          <option value="vibrant-ink">vibrant-ink</option>
-          <option value="xq-dark">xq-dark</option>
-          <option value="xq-light">xq-light</option>
-          <option value="yeti">yeti</option>
-          <option value="yonce">yonce</option>
-          <option value="zenburn">zenburn</option>
+          {themeOptions.map((theme) => (
+            <option
+              key={theme.id}
+              value={theme.value}
+              className="bg-white hover:bg-gray-200"
+              style={{ backgroundColor: "#F3F4F6" }}
+            >
+              {theme.name}
+            </option>
+          ))}
         </select>
       </Label>
       <Button
         className="btn btn-accent ml-2 bg-green-700 hover:bg-green-800"
-        onClick={() => {}}
+        onClick={handleCodeExecution}
       >
         Run Code
       </Button>
