@@ -9,6 +9,6 @@ export const initSocket = async () => {
         transports: ['websocket'],
     };
     console.log("Init Socket Started")
-    console.log(import.meta.env.VITE_REACT_APP_BACKEND_URL)
+    // console.log(import.meta.env.VITE_REACT_APP_BACKEND_URL)
     return io(import.meta.env.VITE_REACT_APP_BACKEND_URL, options)
 }

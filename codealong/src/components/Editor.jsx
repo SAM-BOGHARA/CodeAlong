@@ -299,8 +299,6 @@ const Editor = ({
         const token = response.data.token;
         console.log("token",token)
         const output = await checkStatus(token);
-        // console.log("execution reached here")
-        // setOutputValue(output);
         
       } catch (error) {
         console.error("Error executing code:", error);
@@ -328,7 +326,7 @@ const Editor = ({
         return;
       } else {
         // Code has finished executing
-        const output = response.data.stdout
+        const output = response.data.stdout ? response.data.stdout : response.data.stderr
         console.log("output",output)
         setOutputValue(output);
       }

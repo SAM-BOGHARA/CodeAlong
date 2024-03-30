@@ -4,7 +4,7 @@ import { useLocation, useParams } from "react-router-dom";
 
 const ZegoCloud = () => {
   const location = useLocation();
-  const username = location.state?.username;
+  const username = location.state?.username || "user";
   const { roomID } = useParams();
   let myMeeting = async (element) => {
     const appID = 1114127358;
@@ -69,7 +69,7 @@ const ZegoCloud = () => {
 
   return (
     <div>
-      <div ref={myMeeting} id="zegocloud" className="h-full" />
+      <div ref={myMeeting} id="zegocloud" className="h-100" />
     </div>
   );
 };
