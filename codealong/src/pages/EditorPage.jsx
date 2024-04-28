@@ -13,11 +13,9 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import { useRecoilState } from "recoil";
 import ACTIONS from "../Actions.js";
 import Editor from "../components/Editor";
 import { initSocket } from "../socket.js";
-import { language, cmtheme } from "../../src/atoms";
 
 import { Button } from "@/components/ui/button.jsx";
 import { Textarea } from "@/components/ui/textarea.jsx";
@@ -35,6 +33,13 @@ const EditorPage = () => {
 
   const [customInput, setCustomInput] = useState("");
   const [outputValue, setOutputValue] = useState("");
+
+  const [showZegoCloud, setShowZegoCloud] = useState(false);
+
+  const handleButtonClick = () => {
+    setShowZegoCloud(true);
+  };
+
   const handleOutputValueUpdate = (newOutputValue) => {
     setOutputValue(newOutputValue);
   };
@@ -206,9 +211,18 @@ const EditorPage = () => {
               <ResizableHandle withHandle />
               <ResizablePanel defaultSize={80}>
                 <div className="flex items-center justify-center ">
-                  <Card className="w-full">
-                    <ZegoCloud />
-                  </Card>
+                  {showZegoCloud ? (
+                    <div className="w-400 h-400">
+                      <ZegoCloud />
+                    </div>
+                  ) : (
+                    <Button
+                      onClick={handleButtonClick}
+                      className="flex items-center justify-center "
+                    >
+                      Enable Video Call
+                    </Button>
+                  )}
                 </div>
               </ResizablePanel>
             </ResizablePanelGroup>

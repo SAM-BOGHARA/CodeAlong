@@ -1,20 +1,21 @@
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import React from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const ZegoCloud = () => {
   const location = useLocation();
-  const username = location.state?.username || "user";
   const { roomID } = useParams();
+  const username = location.state?.username
+  const userId = uuidv4();
   let myMeeting = async (element) => {
-    const appID = 1114127358;
-    const serverSecret = "e9758aed57773c645f9e3fd9890a80ea";
-
+    const appID = 1101462523;
+    const serverSecret = "2fd4e78a16303bf2ef01b87c590c47eb";
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       appID,
       serverSecret,
       roomID,
-      username,
+      userId,
       username
     );
 
@@ -33,10 +34,9 @@ const ZegoCloud = () => {
       showRoomDetailsButton: false, // Show room details button
       maxUsers: 25,
       preJoinViewConfig: {
-        title: "Join as : " + username, // The title of the prejoin view. Uses "enter Room" by default.
+        title: "Join: ", // The title of the prejoin view. Uses "enter Room" by default.
       },
       videoResolutionDefault: 720,
-      layOut: "Auto",
       enableUserSearch: true,
       autoHideFooter: true,
     };

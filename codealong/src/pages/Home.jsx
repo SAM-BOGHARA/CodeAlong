@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -24,6 +24,7 @@ const Home = () => {
       toast.error("RoomID and username are required.");
       return;
     }
+    console.log("Username",username)
     // On success: Redirect to Editor
     navigate(`/editor/${roomid}`, {
       state: {
@@ -43,7 +44,6 @@ const Home = () => {
       <div className="bg-zinc-300 w-full h-screen flex items-center justify-center text-white">
         <div className="bg-zinc-900 rounded-lg p-5 w-full max-w-xl">
           {" "}
-          {/* Adjust width here */}
           <Logo />
           <Label className="text-xl flex items-center justify-center">
             Join the Room

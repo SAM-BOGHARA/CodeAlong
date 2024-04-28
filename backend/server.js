@@ -3,12 +3,12 @@ import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
-import { REACT_APP_BACKEND_URL } from './config.js';
-import ACTIONS from './src/Actions.js';
+import ACTIONS from './Actions.js';
+
 dotenv.config();
 
 const app = express();
-
+app.use(cors());
 app.get('/', (req, res) => {
     res.send('server is working');
 });
@@ -78,5 +78,4 @@ io.on('connection', (socket) => {
 
 server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
-    console.log(REACT_APP_BACKEND_URL);
 });

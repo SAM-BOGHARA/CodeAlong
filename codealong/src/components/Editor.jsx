@@ -176,7 +176,7 @@ const Editor = ({
     { id: 63, name: "JavaScript", value: "javascript" },
     { id: 9, name: "JSX", value: "jsx" },
     { id: 10, name: "Markdown", value: "markdown" },
-    { id: 11, name: "PHP", value: "php" },
+    { id: 68, name: "PHP", value: "php" },
     { id: 71, name: "Python", value: "python" },
     { id: 80, name: "R", value: "r" },
     { id: 73, name: "Rust", value: "rust" },
