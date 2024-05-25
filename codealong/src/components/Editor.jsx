@@ -291,8 +291,10 @@ const Editor = ({
           url: import.meta.env.VITE_JUDGE0_API_URL,
           params: { base64_encoded: "true", fields: "*" },
           headers: {
+            "content-type": "application/json",
             "Content-Type": "application/json",
-            "Host": import.meta.env.VITE_REACT_APP_RAPID_API_HOST,
+            "X-RapidAPI-Host": import.meta.env.VITE_REACT_APP_RAPID_API_HOST,
+            "X-Rapid+API-Key": import.meta.env.VITE_REACT_APP_RAPID_API_KEY,
           },
           data: formData,
         });
@@ -311,7 +313,11 @@ const Editor = ({
     const options = {
       method: "GET",
       url: import.meta.env.VITE_JUDGE0_API_URL + "/" + token,
-      params: { base64_encoded: "false", fields: "*" }
+      params: { base64_encoded: "false", fields: "*" },
+      headers: {
+        "X-RapidAPI-Key": import.meta.env.VITE_REACT_APP_RAPID_API_KEY,
+        "X-RapidAPI-Host": import.meta.env.VITE_REACT_APP_RAPID_API_HOST,
+      },
     };
 
     try {
