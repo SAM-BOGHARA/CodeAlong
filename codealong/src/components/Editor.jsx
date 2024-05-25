@@ -294,7 +294,7 @@ const Editor = ({
             "content-type": "application/json",
             "Content-Type": "application/json",
             "X-RapidAPI-Host": import.meta.env.VITE_REACT_APP_RAPID_API_HOST,
-            "X-Rapid+API-Key": import.meta.env.VITE_REACT_APP_RAPID_API_KEY,
+            "X-RapidAPI-Key": import.meta.env.VITE_REACT_APP_RAPID_API_KEY,
           },
           data: formData,
         });
