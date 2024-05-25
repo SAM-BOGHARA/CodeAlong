@@ -36,25 +36,6 @@ const EditorNavbar = () => {
         </div>
       </nav>
     </>
-    // <>
-    //   <div className="navbar bg-base-100">
-    //     <div className="flex-1">
-    //       <a className="btn text-md">Codealong</a>
-    //     </div>
-    //     <div className="flex-none">
-    //       <ul className="menu menu-horizontal px-1">
-    //         <div className="flex flex-row justify-between mt-auto">
-    //           <button className="btn btn-sm btn-warning" onClick={copyRoomId}>
-    //             Copy Room ID
-    //           </button>
-    //           <button className="btn btn-sm btn-outline btn-error ml-1">
-    //             Leave Room
-    //           </button>
-    //         </div>
-    //       </ul>
-    //     </div>
-    //   </div>
-    // </>
   );
 };
 
